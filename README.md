@@ -1,6 +1,15 @@
 # bdms
 bridge detection management system
 
+# Get Started
+
+- IntelliJ IDEA
+- Maven
+- SpringBoot
+- Jpa
+
+Run `src/test/UserControllerTests` to see demo.
+
 # References
 
 ## spring boot
