@@ -21,6 +21,10 @@ public class User {
     @JsonIgnore
     private String password;
     
+    private String telephone;
+    
+    private Integer age;
+    
     User() {
     }
 }

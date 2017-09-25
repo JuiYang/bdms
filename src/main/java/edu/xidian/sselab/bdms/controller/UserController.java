@@ -28,8 +28,14 @@ public class UserController {
     
     @PostMapping("/{uid}")
     public User edit(@PathVariable Long uid, User user) {
-        user.setId(uid);
-        return repository.save(user);
+        User mergeUser = repository.findOne(uid);
+        mergeUser.setUsername(user.getUsername());
+        mergeUser.setAge(user.getAge());
+        mergeUser.setTelephone(user.getTelephone());
+        if (!"".equals(user.getPassword())) {
+            mergeUser.setPassword(user.getPassword());
+        }
+        return repository.save(mergeUser);
     }
     
     @DeleteMapping("/{uid}")
