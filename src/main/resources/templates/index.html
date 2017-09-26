@@ -4,201 +4,25 @@
     <meta charset="UTF-8"/>
     <meta content="text/html;charset=UTF-8"/>
     <title th:text="${title}"></title>
-    <link rel="stylesheet" type="text/css" th:href="@{plugins/easyui/themes/default/easyui.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{plugins/easyui/themes/icon.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{plugins/easyui/themes/color.css}"/>
-    <script type="text/javascript" th:src="@{plugins/jquery/jquery.min.js}"></script>
+    <div th:replace="fragments/header :: header-css"></div>
+    <div th:replace="fragments/header :: header-js"></div>
 </head>
 <body class="easyui-layout">
-    <div data-options="region:'north',split:false" style="height:60px;background-color:#108ee9;">
-        <div style="width:49%;display:inline-block;">
-            <span style="line-height:55px;color:#fff;font-size:24px;margin-left:20px;">桥梁检测信息系统</span>
-        </div>
-        <div style="width:49%;display:inline-block;text-align:right;" class="">
-            <a href="#" class="easyui-splitbutton" data-options="menu:'#topUserMenu',iconCls:'icon-user'">登录用户</a>
-        </div>
+<div class="header" data-options="region:'north',split:false" style="">
+    <div th:replace="fragments/header :: header"></div>
+</div>
+<div class="footer" data-options="region:'south',split:false" style="">
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+<div class="sider" data-options="region:'west',split:false" style="">
+    <div th:replace="fragments/sider :: sider"></div>
+</div>
+<div class="container" data-options="region:'center',split:false" style="">
+    <div class="easyui-panel" title="首页">
+        
     </div>
-    <div data-options="region:'south',split:false" style="height:50px;">
-        <div style="text-align:center;">
-            <span style="line-height:40px;font-size:15px;color:#108ee9;">SSELab 软件服务实验室·桥梁检测管理系统 @ 2017</span>
-        </div>
-    </div>
-    <div data-options="region:'west',title:'功能列表',split:false" style="width:250px;"></div>
-    <div data-options="region:'center',title:'用户管理',split:false" style="padding:10px;background:#eee;">
-        <h2>基于 SpringBoot 和 EasyUI 的简单 CRUD 应用</h2>
-        <p>可点击下列按钮进行操作</p>
-    
-        <table id="dg" title="用户信息表" class="easyui-datagrid" style="min-height:400px;"
-               idField="id"
-               toolbar="#toolbar" 
-               pagination="true"
-               rownumbers="true" 
-               fitColumns="true" 
-               singleSelect="true">
-            <thead>
-                <tr>
-                    <th field="id" width="50">用户ID</th>
-                    <th field="username" width="50">用户名</th>
-                    <th field="age" width="50">年龄</th>
-                    <th field="telephone" width="50">电话</th>
-                </tr>
-            </thead>
-        </table>
-        <div id="toolbar">
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">添加用户</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑用户</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除用户</a>
-        </div>
-    </div>
+</div>
 
-    <div id="dlg" class="easyui-dialog" style="width:400px" closed="true" buttons="#dlg-buttons">
-        <form id="fm" style="margin:0;padding:20px 50px" novalidate="true">
-            <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">用户信息</div>
-            <div style="margin-bottom:10px">
-                <input name="username" class="easyui-textbox" required="true" label="用户名：" style="width:100%"/>
-            </div>
-            <div style="margin-bottom:10px">
-                <input type="password" name="password" class="easyui-textbox" required="false" label="密码：" style="width:100%"/>
-            </div>
-            <div style="margin-bottom:10px">
-                <input type="number" name="age" class="easyui-textbox" required="true" label="年龄：" style="width:100%"/>
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="telephone" class="easyui-textbox" required="true" label="电话：" style="width:100%"/>
-            </div>
-        </form>
-    </div>
-    <div id="dlg-buttons">
-        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">保存</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
-    </div>
-    <div id="topUserMenu" style="width:100px;">
-        <div data-options="iconCls:'icon-edit'">修改信息</div>
-        <div data-options="iconCls:'icon-undo'">退出</div>
-    </div>
-
-    <script type="text/javascript" th:src="@{plugins/easyui/jquery.easyui.min.js}"></script>
-    <script type="text/javascript" th:src="@{plugins/easyui/easyui-lang-zh_CN.js}"></script>
-    
-    <script type="text/javascript">
-        var apiUrl = '/api/users';
-        var saveUrl;
-        var type = 'PUT';
-        var $datagrid = $("#dg");
-        var $form = $('#fm');
-        var $dialog = $('#dlg');
-    
-        loadAndSetGridData();
-        
-        function loadAndSetGridData() {
-            $.ajax({
-                url: apiUrl,
-                type: 'GET',
-                dataType: 'json',
-                error: function (xhr, status, err) {
-                    $datagrid.datagrid("loaded");
-                    $datagrid.datagrid('loadData', {
-                        total: 0,
-                        rows: []
-                    });
-                },
-                success: function (res) {
-                    $datagrid.datagrid("loaded");
-                    $datagrid.datagrid("loadData", {
-                        total: res.totalElements,
-                        rows: res.content
-                    });
-                }
-            })
-        }
-        
-        function newUser() {
-            $dialog.dialog('open').dialog('center').dialog('setTitle','新建用户');
-            $form.form('clear');
-            saveUrl = apiUrl;
-            type = 'PUT';
-        }
-        
-        function editUser() {
-            var row = $datagrid.datagrid('getSelected');
-            if (row){
-                $dialog.dialog('open').dialog('center').dialog('setTitle','编辑用户');
-                $form.form('load',row);
-                saveUrl = apiUrl + '/' + row.id;
-                type = 'POST';
-            } else {
-                $.messager.show({
-                    title: '消息',
-                    msg: "请先选择一条记录！"
-                });
-            }
-        }
-
-        function saveUser() {
-            var username = $form.find("input[name='username']").val();
-            var password = $form.find("input[name='password']").val();
-            var age = $form.find("input[name='age']").val();
-            var telephone = $form.find("input[name='telephone']").val();
-            $.ajax({
-                url: saveUrl,
-                type: type,
-                dataType: 'json',
-                contentType: 'application/x-www-form-urlencoded',
-                data: {
-                    username: username,
-                    password: password,
-                    age: age,
-                    telephone: telephone
-                },
-                success: function (res) {
-                    $.messager.show({
-                        title: '消息',
-                        msg: "操作成功！"
-                    });
-                    loadAndSetGridData();
-                    $dialog.dialog('close');
-                },
-                error: function () {
-                    $.messager.show({
-                        title: '消息',
-                        msg: "操作失败！"
-                    });
-                }
-            })
-        }
-        
-        function destroyUser(){
-            var row = $datagrid.datagrid('getSelected');
-            if (row) {
-                saveUrl = apiUrl + '/' + row.id;
-                $.messager.confirm('确认','确定删除此用户吗？',function (result){
-                    if (result){
-                        $.ajax({
-                            url: saveUrl,
-                            type: "DELETE",
-                            success: function () {
-                                $.messager.show({
-                                    title: '消息',
-                                    msg: "操作成功！"
-                                });
-                                loadAndSetGridData();
-                            },
-                            error: function () {
-                                $.messager.show({
-                                    title: '消息',
-                                    msg: "操作失败！"
-                                });
-                            }
-                        });
-                    }
-                });
-            } else {
-                $.messager.show({
-                    title: '消息',
-                    msg: "请先选择一条记录！"
-                });
-            }
-        }
-    </script>
+<div th:replace="fragments/footer :: js"></div>
 </body>
 </html>

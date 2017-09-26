@@ -5,6 +5,7 @@ import edu.xidian.sselab.bdms.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,6 +14,9 @@ public class UserController {
     
     @Autowired
     UserRepository repository;
+    
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
     
     @GetMapping("")
     public Page<User> queryByPage(
@@ -23,6 +27,7 @@ public class UserController {
     
     @PutMapping("")
     public User save(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
     
@@ -33,7 +38,7 @@ public class UserController {
         mergeUser.setAge(user.getAge());
         mergeUser.setTelephone(user.getTelephone());
         if (!"".equals(user.getPassword())) {
-            mergeUser.setPassword(user.getPassword());
+            mergeUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
         return repository.save(mergeUser);
     }

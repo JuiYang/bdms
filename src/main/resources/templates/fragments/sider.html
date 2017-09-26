@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="sider">
+    <div class="easyui-accordion nav">
+        <div title="搜索" data-options="iconCls:'icon-search',collapsed:false,collapsible:false">
+            <input class="easyui-searchbox search-input" prompt="关键词"/>
+        </div>
+        <div title="基本信息管理" data-options="selected:true">
+            <a class="nav-menu-item active" th:href="@{/user}">用户管理</a>
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+        </div>
+        <div title="桥梁信息管理">
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+        </div>
+        <div title="日常巡检">
+            <a class="nav-menu-item" th:href="@{/user}">用户管理</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

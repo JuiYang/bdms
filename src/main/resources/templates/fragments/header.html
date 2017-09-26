@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:fragment="header-css">
+        <link rel="stylesheet" type="text/css" th:href="@{plugins/easyui/themes/metro-blue/easyui.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{plugins/easyui/themes/icon.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{plugins/easyui/themes/color.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{css/index.css}"/>
+    </div>
+    <div th:fragment="header-js">
+        <script type="text/javascript" th:src="@{plugins/jquery/jquery.min.js}"></script>
+    </div>
+</head>
+<body>
+<div th:fragment="header">
+    <div class="header-left pull-left">
+        <a class="logo-text" th:href="@{/}">桥梁检测管理系统</a>
+    </div>
+    <div class="header-right text-right pull-right">
+        <a href="#" class="easyui-splitbutton top-menu" data-options="menu:'#topUserMenu',iconCls:'icon-user'">登录用户</a>
+    </div>
+    <div id="topUserMenu">
+        <div class="top-sub-menu" data-options="iconCls:'icon-edit'">修改信息</div>
+        <div class="top-sub-menu" data-options="iconCls:'icon-undo'"><form th:action="@{/logout}" method="post"><input class="link-btn" type="submit" value="退出"/></form></div>
+    </div>
+</div>
+</body>
+</html>

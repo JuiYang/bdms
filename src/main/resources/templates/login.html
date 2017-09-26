@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="text/html;charset=UTF-8"/>
+    <title th:text="${title}"></title>
+    <div th:replace="fragments/header :: header-css"></div>
+    <div th:replace="fragments/header :: header-js"></div>
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+        }
+        .login-warpper {
+            width: 280px;
+            height: 250px;
+            padding: 30px 50px;
+            position: absolute;
+            left: 50%;
+            top: 45%;
+            opacity: .9;
+            box-shadow: 0 0 100px rgba(0,0,0,.08);
+            border-radius: 1%;
+            background-color: #fff;
+            margin: -160px 0 0 -160px;
+        }
+        .login-warpper div {
+            margin: 20px 0;
+        }
+        .login-warpper h2 {
+            color: #549ff1;
+            padding-bottom: 15px;
+        }
+        .login-form input {
+            border-radius: 3px;
+            border: 1px solid #ddd;
+            padding: 5px;
+        }
+        .login-form .input {
+            height: 22px;
+        }
+        .login-form .login-btn {
+            width: 292px;
+            height: 32px;
+            background-color: #108ee9;
+            color: #fff;
+        }
+        .login-form .login-btn:hover {
+            background-color: #549ff1;
+        }
+        .copyright {
+            padding-top: 10px;
+            color: #777;
+            font-size: .8em;
+        }
+    </style>
+</head>
+<body>
+<div class="login-warpper">
+    <div class="text-center">
+        <h2>桥梁检测管理系统</h2>
+        <p th:text="${errorMsg}" style="color:red;"></p>
+    </div>
+    <form th:action="@{/login}" method="post" class="login-form">
+        <div>
+            <input class="input" placeholder="用户名" name="username" style="width:100%;"/>
+        </div>
+        <div>
+            <input class="input" type="password" name="password" placeholder="密码" style="width:100%;"/>
+        </div>
+        <div>
+            <input type="submit" class="login-btn" value="登录"/>
+        </div>
+    </form>
+    <div class="text-center copyright">
+        Copyright @ 2017 SSELab
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: js"></div>
+</body>
+</html>

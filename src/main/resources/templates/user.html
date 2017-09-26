@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="text/html;charset=UTF-8"/>
+    <title th:text="${title}"></title>
+    <div th:replace="fragments/header :: header-css"></div>
+    <div th:replace="fragments/header :: header-js"></div>
+</head>
+<body class="easyui-layout">
+<div class="header" data-options="region:'north',split:false" style="">
+    <div th:replace="fragments/header :: header"></div>
+</div>
+<div class="footer" data-options="region:'south',split:false" style="">
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+<div class="sider" data-options="region:'west',split:false" style="">
+    <div th:replace="fragments/sider :: sider"></div>
+</div>
+<div class="container" data-options="region:'center',split:false" style="">
+    <table id="dg" th:title="${title}" class="easyui-datagrid" style="min-height:400px;height:100%;"
+           idField="id"
+           toolbar="#toolbar"
+           pagination="true"
+           rownumbers="true"
+           fitColumns="true"
+           singleSelect="true">
+        <thead>
+        <tr>
+            <th field="id" width="50">用户ID</th>
+            <th field="username" width="50">用户名</th>
+            <th field="age" width="50">年龄</th>
+            <th field="telephone" width="50">电话</th>
+        </tr>
+        </thead>
+    </table>
+    <div id="toolbar">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">添加用户</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑用户</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除用户</a>
+    </div>
+</div>
+
+<div id="dlg" class="easyui-dialog" style="width:400px" closed="true" buttons="#dlg-buttons">
+    <form id="fm" style="margin:0;padding:20px 50px" novalidate="true">
+        <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">用户信息</div>
+        <div style="margin-bottom:10px">
+            <input name="username" class="easyui-textbox" required="true" label="用户名：" style="width:100%"/>
+        </div>
+        <div style="margin-bottom:10px">
+            <input type="password" name="password" class="easyui-textbox" required="false" label="密码：" style="width:100%"/>
+        </div>
+        <div style="margin-bottom:10px">
+            <input type="number" name="age" class="easyui-textbox" required="true" label="年龄：" style="width:100%"/>
+        </div>
+        <div style="margin-bottom:10px">
+            <input name="telephone" class="easyui-textbox" required="true" label="电话：" style="width:100%"/>
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+
+<div th:replace="fragments/footer :: js"></div>
+<script type="text/javascript" th:src="@{js/user.js}"></script>
+</body>
+</html>
