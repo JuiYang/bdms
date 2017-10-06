@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+//用户实体
 @Data
 @AllArgsConstructor
 @Entity
